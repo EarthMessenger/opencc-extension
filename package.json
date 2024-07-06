@@ -11,13 +11,13 @@
   "license": "MIT",
   "scripts": {
     "build": "./build.mjs",
-    "build:watch": "yarn build watch",
+    "build:watch": "./build.mjs watch",
     "start": "web-ext run -s ./build",
-    "start:firefox": "concurrently \"NODE_ENV='development' BROWSER='firefox' yarn build:watch\" \"wait-on ./build/manifest.json && yarn start\"",
-    "start:chromium": "concurrently \"NODE_ENV='development' BROWSER='chrome' yarn build:watch\" \"wait-on ./build/manifest.json && yarn start -t chromium\"",
-    "dist:chrome": "NODE_ENV='production' BROWSER='chrome' yarn build ./dist/chrome && web-ext build -s ./dist/chrome -a . -n opencc.chrome.zip",
-    "dist:firefox": "NODE_ENV='production' BROWSER='firefox' yarn build ./dist/firefox && web-ext build -s ./dist/firefox -a . -n opencc.firefox.zip",
-    "dist": "concurrently \"yarn dist:chrome\" \"yarn dist:firefox\" && rm -rf ./dist"
+    "start:firefox": "concurrently \"NODE_ENV='development' BROWSER='firefox' pnpm build:watch\" \"wait-on ./build/manifest.json && pnpm run start\"",
+    "start:chromium": "concurrently \"NODE_ENV='development' BROWSER='chrome' pnpm build:watch\" \"wait-on ./build/manifest.json && pnpm run start -t chromium\"",
+    "dist:chrome": "NODE_ENV='production' BROWSER='chrome' pnpm run build ./dist/chrome && web-ext build -s ./dist/chrome -a . -n opencc.chrome.zip",
+    "dist:firefox": "NODE_ENV='production' BROWSER='firefox' pnpm run build ./dist/firefox && web-ext build -s ./dist/firefox -a . -n opencc.firefox.zip",
+    "dist": "concurrently \"pnpm run dist:chrome\" \"pnpm run dist:firefox\" && rm -rf ./dist"
   },
   "dependencies": {
     "opencc-js": "^1.0.5"
@@ -51,5 +51,6 @@
       "eslint:recommended",
       "prettier"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a"
 }
